@@ -273,13 +273,17 @@ namespace RESERVAS_DE_HOTEL.Migrations
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("UsuarioId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Reservas");
                 });
@@ -343,7 +347,13 @@ namespace RESERVAS_DE_HOTEL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RESERVAS_DE_HOTEL.Models.ApplicationUser", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
+
                     b.Navigation("Hotel");
+
+                    b.Navigation("Usuario");
                 });
 #pragma warning restore 612, 618
         }
